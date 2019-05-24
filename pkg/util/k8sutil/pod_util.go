@@ -133,8 +133,8 @@ func applyPodPolicy(clusterName string, pod *v1.Pod, policy *spec.PodPolicy) {
 		return
 	}
 
-	if policy.AntiAffinity {
-		pod = PodWithAntiAffinity(pod, clusterName)
+	if policy.Affinity != nil {
+		pod.Spec.Affinity = policy.Affinity
 	}
 
 	if len(policy.NodeSelector) != 0 {

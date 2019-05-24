@@ -167,9 +167,8 @@ type PodPolicy struct {
 	// labels.
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 
-	// AntiAffinity determines if the etcd-operator tries to avoid putting
-	// the etcd members in the same cluster onto the same node.
-	AntiAffinity bool `json:"antiAffinity,omitempty"`
+	// The scheduling constraints on etcd pods.
+	Affinity *v1.Affinity `json:"affinity,omitempty"`
 
 	// PullPolicy describes a policy for if/when to pull a container image
 	// One of PullAlways, PullNever, PullIfNotPresent.
