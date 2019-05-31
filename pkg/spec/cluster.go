@@ -169,6 +169,8 @@ type PodPolicy struct {
 
 	// The scheduling constraints on etcd pods.
 	Affinity *v1.Affinity `json:"affinity,omitempty"`
+	// **DEPRECATED**. Use Affinity instead.
+	AntiAffinity bool `json:"antiAffinity,omitempty"`
 
 	// PullPolicy describes a policy for if/when to pull a container image
 	// One of PullAlways, PullNever, PullIfNotPresent.
