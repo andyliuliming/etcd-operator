@@ -302,6 +302,30 @@ func newEtcdPod(m *etcdutil.Member, initialCluster []string, clusterName, state,
 		"--listen-peer-urls=%s --listen-client-urls=%s --advertise-client-urls=%s "+
 		"--initial-cluster=%s --initial-cluster-state=%s",
 		dataDir, m.Name, m.PeerURL(), m.ListenPeerURL(), m.ListenClientURL(), m.ClientURL(), strings.Join(initialCluster, ","), state)
+	if cs.HeartbeatTimeout > 0 {
+		commands += fmt.Sprintf(" --heartbeat-interval=%d", cs.HeartbeatTimeout)
+	}
+
+	if cs.ElectionTimeout > 0 {
+		commands += fmt.Sprintf(" --election-timeout=%d", cs.ElectionTimeout)
+	}
+
+	if cs.SnapshotCount > 0 {
+		commands += fmt.Sprintf(" --snapshot-count=%d", cs.SnapshotCount)
+	}
+
+	if cs.AutoCompactionMode != "" {
+		commands += fmt.Sprintf(" --auto-compaction-mode=%s", cs.AutoCompactionMode)
+	}
+
+	if cs.AutoCompactionRetention != "" {
+		commands += fmt.Sprintf(" --auto-compaction-retention=%s", cs.AutoCompactionRetention)
+	}
+
+	if cs.ExperimentalPeerSkipClientSANVerification {
+		commands += fmt.Sprintf(" --experimental-peer-skip-client-san-verification")
+	}
+
 	if m.SecurePeer {
 		commands += fmt.Sprintf(" --peer-client-cert-auth=true --peer-trusted-ca-file=%[1]s/peer-ca.crt --peer-cert-file=%[1]s/peer.crt --peer-key-file=%[1]s/peer.key", peerTLSDir)
 	}
