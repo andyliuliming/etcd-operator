@@ -151,6 +151,7 @@ func (c *Cluster) removeOneMember() error {
 }
 
 func (c *Cluster) removeDeadMember(toRemove *etcdutil.Member) error {
+	// dump the events
 	if c.cluster.Spec.SelfHosted != nil {
 		selectedNodes, err := c.selectSchedulableNodes()
 		if err != nil {
